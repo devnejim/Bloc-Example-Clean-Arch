@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:bloc_app_example/core/constants/strings.dart';
+import 'package:bloc_app_example/core/constants/success_messages.dart';
 import 'package:bloc_app_example/features/posts/domain/entities/post.dart';
 import 'package:bloc_app_example/features/posts/domain/usecases/add.dart';
 import 'package:bloc_app_example/features/posts/domain/usecases/delete.dart';

@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/errors/app_failures.dart';
 
 class UpdatePostUsecase {
-  UpdatePostUsecase({required this.postRepository});
+  UpdatePostUsecase(this.postRepository);
   final PostRepository postRepository;
 
   Future<Either<Failure, Unit>> call(PostEntity post) async {
