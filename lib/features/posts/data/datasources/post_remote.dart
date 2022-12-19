@@ -26,7 +26,7 @@ class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
       headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
-      List<Map<String, dynamic>> decodedBody = jsonDecode(response.body);
+      List decodedBody = jsonDecode(response.body);
       final posts = decodedBody.map((e) => PostModel.fromJson(e)).toList();
       return posts;
     }

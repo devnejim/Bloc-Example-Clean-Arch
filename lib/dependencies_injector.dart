@@ -1,6 +1,7 @@
 import 'package:bloc_app_example/features/posts/data/datasources/post_local.dart';
 import 'package:bloc_app_example/features/posts/data/datasources/post_remote.dart';
 import 'package:bloc_app_example/features/posts/data/repositories/post_repository_impl.dart';
+import 'package:bloc_app_example/features/posts/domain/repositories/post_repository.dart';
 import 'package:bloc_app_example/features/posts/domain/usecases/add.dart';
 import 'package:bloc_app_example/features/posts/domain/usecases/delete.dart';
 import 'package:bloc_app_example/features/posts/domain/usecases/get_all.dart';
@@ -16,7 +17,7 @@ import 'core/utils/network.dart';
 GetIt getIt = GetIt.instance;
 
 class ServiceLocator {
-  Future<void> init() async {
+  static Future<void> init() async {
     // Bloc Services
     getIt.registerFactory(() => PostsBloc(getAllPostsUsecase: getIt()));
     getIt.registerFactory(() => AddDeleteUpdateBloc(
@@ -32,21 +33,21 @@ class ServiceLocator {
     getIt.registerLazySingleton(() => UpdatePostUsecase(getIt()));
 
     // Repo
-    getIt.registerLazySingleton(() => PostRepositoryImpl(
+    getIt.registerLazySingleton<PostRepository>(() => PostRepositoryImpl(
         localDataSource: getIt(),
         remoteDataSource: getIt(),
         networkInfo: getIt()));
 
     // Data sources
 
-    getIt.registerLazySingleton(
+    getIt.registerLazySingleton<PostsRemoteDataSource>(
         () => PostsRemoteDataSourceImpl(client: getIt()));
-    getIt.registerLazySingleton(
+    getIt.registerLazySingleton<PostsLocalDataSource>(
         () => PostsLocalDataSourceImpl(sharedPreferences: getIt()));
 
     //! Core
 
-    getIt.registerLazySingleton(() => NetworkInfoImpl(getIt()));
+    getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(getIt()));
 
 //! External
 

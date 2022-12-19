@@ -33,6 +33,7 @@ class PostRepositoryImpl implements PostRepository {
       } on ServerException {
         return Left(ServerFailure());
       } catch (e) {
+        print(e);
         return Left(UnExpectedFailure());
       }
     } else {
