@@ -2,9 +2,10 @@ import 'package:bloc_app_example/core/common_widgets/app_text.dart';
 import 'package:bloc_app_example/core/common_widgets/error_widget.dart';
 import 'package:bloc_app_example/core/common_widgets/loading_indicator.dart';
 import 'package:bloc_app_example/core/extensions/build_context_extension.dart';
-import 'package:bloc_app_example/core/extensions/string_extension.dart';
 import 'package:bloc_app_example/features/posts/domain/entities/post.dart';
 import 'package:bloc_app_example/features/posts/presentation/blocs/comments/comments_bloc.dart';
+import 'package:bloc_app_example/features/posts/presentation/widgets/post_comments/post_card.dart';
+import 'package:bloc_app_example/features/posts/presentation/widgets/post_comments/post_comments_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,42 +34,10 @@ class PostComments extends StatelessWidget {
             } else if (state is DoneState) {
               final comments = state.comments;
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Card(
-                    child: Column(
-                      children: [
-                        AppText(
-                          style: context.appTextTheme.titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                          text: postEntity.title.capitalizeFirstOfEach,
-                          textAlign: TextAlign.center,
-                        ),
-                        AppText(
-                          style: context.appTextTheme.bodyMedium!,
-                          textAlign: TextAlign.center,
-                          text: postEntity.body.capitalizeFirst,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Flexible(
-                    child: ListView.builder(
-                      itemCount: comments.length,
-                      itemBuilder: (context, index) {
-                        final comment = comments[index];
-                        return Card(
-                          child: ListTile(
-                            title: AppText(
-                                style: context.appTextTheme.titleSmall!,
-                                text: comment.author.capitalizeFirstOfEach),
-                            subtitle: AppText(
-                                style: context.appTextTheme.bodySmall!,
-                                text: comment.body.capitalizeFirst),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  PostCard(postEntity: postEntity),
+                  Flexible(child: CommentsList(comments: comments)),
                 ],
               );
             } else {}

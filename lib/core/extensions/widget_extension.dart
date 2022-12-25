@@ -23,8 +23,8 @@ extension WidgetExtension on Widget {
         child: this,
       );
 
-  Widget paddingAll(double? padding) => Padding(
-        padding: EdgeInsets.all(padding ?? 4),
+  Widget paddingAll([double padding = 8]) => Padding(
+        padding: EdgeInsets.all(padding),
         child: this,
       );
 
