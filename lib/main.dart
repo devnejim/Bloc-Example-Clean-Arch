@@ -6,11 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'dependencies_injector.dart' as sl;
-import 'dependencies_injector.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await ServiceLocator.init();
+  await sl.ServiceLocator.init();
   runApp(const MyApp());
 }
 

@@ -5,8 +5,10 @@ import 'package:bloc_app_example/features/posts/domain/repositories/post_reposit
 import 'package:bloc_app_example/features/posts/domain/usecases/add.dart';
 import 'package:bloc_app_example/features/posts/domain/usecases/delete.dart';
 import 'package:bloc_app_example/features/posts/domain/usecases/get_all.dart';
+import 'package:bloc_app_example/features/posts/domain/usecases/get_post_comments.dart';
 import 'package:bloc_app_example/features/posts/domain/usecases/update.dart';
 import 'package:bloc_app_example/features/posts/presentation/blocs/add_delete_update/add_delete_update_bloc.dart';
+import 'package:bloc_app_example/features/posts/presentation/blocs/comments/comments_bloc.dart';
 import 'package:bloc_app_example/features/posts/presentation/blocs/posts/posts_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -24,6 +26,7 @@ class ServiceLocator {
         addPostUsecase: getIt(),
         deletePostUsecase: getIt(),
         updatePostUsecase: getIt()));
+    getIt.registerFactory(() => CommentsBloc(commentsUseCase: getIt()));
 
     //UseCases
     getIt.registerLazySingleton(
@@ -31,6 +34,8 @@ class ServiceLocator {
     getIt.registerLazySingleton(() => AddPostUsecase(getIt()));
     getIt.registerLazySingleton(() => DeletePostUsecase(getIt()));
     getIt.registerLazySingleton(() => UpdatePostUsecase(getIt()));
+    getIt.registerLazySingleton(
+        () => GetPostCommentsUseCase(postRepository: getIt()));
 
     // Repo
     getIt.registerLazySingleton<PostRepository>(() => PostRepositoryImpl(

@@ -5,11 +5,14 @@ import 'package:bloc_app_example/features/posts/data/models/post.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/post_comment.dart';
+
 abstract class PostsRemoteDataSource {
   Future<List<PostModel>> getPosts();
   Future<Unit> addPost(PostModel postModel);
   Future<Unit> updatePost(PostModel postModel);
   Future<Unit> deletePost(int id);
+  Future<List<PostCommentModel>> getPostComments(int id);
 }
 
 const baseUrl = "https://jsonplaceholder.typicode.com";
@@ -67,6 +70,22 @@ class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
     );
     if (response.statusCode == 200) {
       return unit;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<PostCommentModel>> getPostComments(int postId) async {
+    final response = await client.get(Uri.parse('$baseUrl/comments/'),
+        headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      List decodedBody = json.decode(response.body);
+      List<PostCommentModel> comments = decodedBody
+          .map((e) => PostCommentModel.fromJson(e))
+          .where((element) => element.postId == postId)
+          .toList();
+      return comments;
     } else {
       throw ServerException();
     }

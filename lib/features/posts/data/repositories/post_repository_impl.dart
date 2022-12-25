@@ -4,6 +4,7 @@ import 'package:bloc_app_example/features/posts/data/datasources/post_local.dart
 import 'package:bloc_app_example/features/posts/data/models/post.dart';
 import 'package:bloc_app_example/features/posts/domain/entities/post.dart';
 import 'package:bloc_app_example/core/errors/app_failures.dart';
+import 'package:bloc_app_example/features/posts/domain/entities/post_comment.dart';
 import 'package:bloc_app_example/features/posts/domain/repositories/post_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -32,8 +33,7 @@ class PostRepositoryImpl implements PostRepository {
         return Left(OfflineFailure());
       } on ServerException {
         return Left(ServerFailure());
-      } catch (e) {
-        print(e);
+      } catch (_) {
         return Left(UnExpectedFailure());
       }
     } else {
@@ -63,6 +63,32 @@ class PostRepositoryImpl implements PostRepository {
         remoteDataSource.updatePost(PostModel.fromEntity(post)));
   }
 
+  @override
+  Future<Either<Failure, List<PostCommentEntity>>> getPostComments(
+      int id) async {
+    if ((await networkInfo.connectionStatus)) {
+      try {
+        final postComments = await remoteDataSource.getPostComments(id);
+        // TODO implement cache comments
+        // localDataSource.cachePostComments(id, postComments);
+        return Right(postComments);
+      } on OfflineException {
+        return Left(OfflineFailure());
+      } on ServerException {
+        return Left(ServerFailure());
+      } catch (_) {
+        return Left(UnExpectedFailure());
+      }
+    } else {
+      try {
+        final cachedComments = await localDataSource.getPostCachedComments(id);
+        return Right(cachedComments);
+      } on EmptyCacheException {
+        return Left(EmptyCacheFailure());
+      }
+    }
+  }
+
   Future<Either<Failure, Unit>> _defineDataSourceAndAction(
       PostCRUD postCRUD) async {
     if ((await networkInfo.connectionStatus)) {
@@ -78,4 +104,8 @@ class PostRepositoryImpl implements PostRepository {
       return Left(OfflineFailure());
     }
   }
+  // TODO: implement generic function to clean code
+  // Future<T> _defineDataSourceAndActionGeneric<T>(T) {
+  //   return Future.error('rrrrrrrrrrrrrrrrrrrrr');
+  // }
 }

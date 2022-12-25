@@ -17,6 +17,17 @@ extension WidgetExtension on Widget {
         ),
       );
 
+  Widget paddingSymetric({double? vertical, double? horizontal}) => Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: horizontal ?? 4, vertical: vertical ?? 4),
+        child: this,
+      );
+
+  Widget paddingAll(double? padding) => Padding(
+        padding: EdgeInsets.all(padding ?? 4),
+        child: this,
+      );
+
   Widget colored({Color? color}) => ColoredBox(
         color: color ?? Colors.red,
         child: this,
