@@ -33,12 +33,15 @@ class PostComments extends StatelessWidget {
               return const AppErrorWidget();
             } else if (state is DoneState) {
               final comments = state.comments;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  PostCard(postEntity: postEntity),
-                  Flexible(child: CommentsList(comments: comments)),
-                ],
+              return RefreshIndicator(
+                onRefresh: () async => _onRefresh(context),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    PostCard(postEntity: postEntity),
+                    Flexible(child: CommentsList(comments: comments)),
+                  ],
+                ),
               );
             } else {}
             return const LoadingIndicator();
@@ -46,5 +49,10 @@ class PostComments extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _onRefresh(BuildContext context) async {
+    return BlocProvider.of<CommentsBloc>(context)
+        .add(RefreshCommentsEvent(postId: postEntity.id));
   }
 }

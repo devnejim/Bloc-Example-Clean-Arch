@@ -85,6 +85,8 @@ class PostRepositoryImpl implements PostRepository {
         return Right(cachedComments);
       } on EmptyCacheException {
         return Left(EmptyCacheFailure());
+      } catch (_) {
+        return Left(UnExpectedFailure());
       }
     }
   }
