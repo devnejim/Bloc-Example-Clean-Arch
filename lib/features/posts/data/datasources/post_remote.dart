@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bloc_app_example/core/api/posts_api.dart';
 import 'package:bloc_app_example/core/errors/app_exceptions.dart';
 import 'package:bloc_app_example/features/posts/data/models/post.dart';
 import 'package:dartz/dartz.dart';
@@ -8,14 +9,12 @@ import 'package:http/http.dart' as http;
 import '../models/post_comment.dart';
 
 abstract class PostsRemoteDataSource {
-  Future<List<PostModel>> getPosts();
+  Future<List<PostModel>> getPosts(int start, int limit);
   Future<Unit> addPost(PostModel postModel);
   Future<Unit> updatePost(PostModel postModel);
   Future<Unit> deletePost(int id);
   Future<List<PostCommentModel>> getPostComments(int id);
 }
-
-const baseUrl = "https://jsonplaceholder.typicode.com";
 
 class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
   final http.Client client;
@@ -23,9 +22,9 @@ class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
   PostsRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<List<PostModel>> getPosts() async {
+  Future<List<PostModel>> getPosts(int start, int limit) async {
     final response = await client.get(
-      Uri.parse('$baseUrl/posts/'),
+      Uri.parse(PostsApi.paginatedPostsUri(start, limit)),
       headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
@@ -38,7 +37,7 @@ class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
 
   @override
   Future<Unit> addPost(PostModel postModel) async {
-    final response = await client.post(Uri.parse('$baseUrl/posts/'),
+    final response = await client.post(Uri.parse(PostsApi.addOrUpdatePostUri),
         headers: {"Content-Type": "application/json"},
         body: postModel.toJson());
     if (response.statusCode == 201) {
@@ -51,7 +50,7 @@ class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
   @override
   Future<Unit> deletePost(int id) async {
     final response = await client.delete(
-      Uri.parse('$baseUrl/posts/${id.toString()}'),
+      Uri.parse(PostsApi.deletePostUri(id.toString())),
       headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
@@ -64,7 +63,7 @@ class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
   @override
   Future<Unit> updatePost(PostModel postModel) async {
     final response = await client.patch(
-      Uri.parse('$baseUrl/posts/'),
+      Uri.parse(PostsApi.addOrUpdatePostUri),
       body: postModel.toJson(),
       headers: {"Content-Type": "application/json"},
     );
@@ -77,7 +76,7 @@ class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
 
   @override
   Future<List<PostCommentModel>> getPostComments(int postId) async {
-    final response = await client.get(Uri.parse('$baseUrl/comments/'),
+    final response = await client.get(Uri.parse(PostsApi.commentsUri),
         headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
       List decodedBody = json.decode(response.body);

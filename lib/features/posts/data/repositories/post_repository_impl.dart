@@ -23,10 +23,11 @@ class PostRepositoryImpl implements PostRepository {
   final NetworkInfo networkInfo;
 
   @override
-  Future<Either<Failure, List<PostEntity>>> getPosts() async {
+  Future<Either<Failure, List<PostEntity>>> getPosts(
+      int start, int limit) async {
     if ((await networkInfo.connectionStatus)) {
       try {
-        final posts = await remoteDataSource.getPosts();
+        final posts = await remoteDataSource.getPosts(start, limit);
         localDataSource.cachePosts(posts);
         return Right(posts);
       } on OfflineException {

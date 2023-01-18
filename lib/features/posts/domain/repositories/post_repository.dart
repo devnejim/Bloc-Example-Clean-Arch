@@ -4,7 +4,7 @@ import 'package:bloc_app_example/features/posts/domain/entities/post_comment.dar
 import 'package:dartz/dartz.dart';
 
 abstract class PostRepository {
-  Future<Either<Failure, List<PostEntity>>> getPosts();
+  Future<Either<Failure, List<PostEntity>>> getPosts(int start, int limit);
   Future<Either<Failure, Unit>> addPost(PostEntity post);
   Future<Either<Failure, Unit>> updatePost(PostEntity post);
   Future<Either<Failure, Unit>> deletePost(int id);

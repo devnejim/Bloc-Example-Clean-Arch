@@ -9,11 +9,12 @@ class AddPostDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: const [
-          TextField(),
+          TextField(decoration: InputDecoration(label: Text('Title'))),
           SizedBox(
             height: 5,
           ),
-          TextField(),
+          TextField(
+              decoration: InputDecoration(label: Text('Body')), maxLines: 4),
         ],
       ),
     );

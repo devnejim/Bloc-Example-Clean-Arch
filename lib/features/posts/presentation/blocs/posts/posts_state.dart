@@ -7,14 +7,23 @@ abstract class PostsState extends Equatable {
   List<Object> get props => [];
 }
 
-class PostsInitial extends PostsState {}
+class PostsInitial extends PostsState {
+  @override
+  List<Object> get props => [];
+}
 
-class LoadingState extends PostsState {}
+class LoadingState extends PostsState {
+  @override
+  List<Object> get props => [];
+}
 
 class DoneState extends PostsState {
   final List<PostEntity> posts;
+  final bool canFetch;
+  const DoneState({required this.posts, required this.canFetch});
 
-  const DoneState({required this.posts});
+  @override
+  List<Object> get props => [posts, canFetch];
 }
 
 class ErrorState extends PostsState {

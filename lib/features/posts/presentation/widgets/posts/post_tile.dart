@@ -13,6 +13,9 @@ class PostTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        leading: CircleAvatar(
+            backgroundColor: Theme.of(context).primaryColorDark,
+            child: Text(post.id.toString())),
         onTap: () => context.goNamed(AppRoutes.postComments.name, extra: post),
         title: AppText(
           style: context.appTextTheme.titleSmall!,

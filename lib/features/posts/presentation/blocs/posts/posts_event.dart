@@ -7,6 +7,9 @@ abstract class PostsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetPostsEvent extends PostsEvent {}
+class GetPostsEvent extends PostsEvent {
+  const GetPostsEvent({this.posts});
+  final List<PostEntity>? posts;
+}
 
 class RefreshPostsEvent extends PostsEvent {}
