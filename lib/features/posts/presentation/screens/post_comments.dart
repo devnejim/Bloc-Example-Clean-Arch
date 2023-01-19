@@ -1,7 +1,5 @@
-import 'package:bloc_app_example/core/common_widgets/app_text.dart';
 import 'package:bloc_app_example/core/common_widgets/error_widget.dart';
 import 'package:bloc_app_example/core/common_widgets/loading_indicator.dart';
-import 'package:bloc_app_example/core/extensions/build_context_extension.dart';
 import 'package:bloc_app_example/features/posts/domain/entities/post.dart';
 import 'package:bloc_app_example/features/posts/presentation/blocs/comments/comments_bloc.dart';
 import 'package:bloc_app_example/features/posts/presentation/widgets/post_comments/post_card.dart';
@@ -21,9 +19,8 @@ class PostComments extends StatelessWidget {
         ..add(GetCommentsEvent(postId: postEntity.id)),
       child: Scaffold(
         appBar: AppBar(
-          title: AppText(
-            style: context.appTextTheme.titleLarge!,
-            text: 'Post Comments',
+          title: const Text(
+            'Post Comments',
           ),
           centerTitle: true,
         ),
