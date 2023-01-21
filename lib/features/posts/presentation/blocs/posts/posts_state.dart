@@ -30,4 +30,15 @@ class ErrorState extends PostsState {
   final String errorMessage;
 
   const ErrorState({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+
+//
+class TestState extends PostsState {
+  const TestState();
+
+  @override
+  List<Object> get props => [];
 }

@@ -13,3 +13,6 @@ class GetPostsEvent extends PostsEvent {
 }
 
 class RefreshPostsEvent extends PostsEvent {}
+
+//
+class TestEvent extends PostsEvent {}

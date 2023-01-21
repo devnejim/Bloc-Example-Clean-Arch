@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_app_example/features/posts/domain/usecases/get_post_comments.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -14,6 +14,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
   CommentsBloc({required this.commentsUseCase}) : super(CommentsInitial()) {
     on<CommentsEvent>((event, emit) async {
       final getComments = commentsUseCase.postRepository.getPostComments;
+
       if (event is GetCommentsEvent) {
         emit(LoadingState());
         final response = await getComments(event.postId);
