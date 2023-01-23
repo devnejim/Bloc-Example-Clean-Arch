@@ -40,8 +40,11 @@ class PostComments extends StatelessWidget {
                   ],
                 ),
               );
-            } else {}
-            return const LoadingIndicator();
+            } else if (state is LoadingState) {
+              return const LoadingIndicator();
+            } else {
+              return const SizedBox.shrink();
+            }
           },
         ),
       ),
@@ -53,3 +56,50 @@ class PostComments extends StatelessWidget {
         .add(RefreshCommentsEvent(postId: postEntity.id));
   }
 }
+
+
+
+
+
+
+
+
+
+
+// class PostCommentBody extends StatelessWidget {
+//   const PostCommentBody({
+//     super.key,
+//     required this.onRefresh,
+//     required this.postEntity,
+//   });
+
+//   final VoidCallback onRefresh;
+//   final PostEntity postEntity;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<CommentsBloc, CommentsState>(
+//       builder: (context, state) {
+//         if (state is ErrorState) {
+//           return const AppErrorWidget();
+//         } else if (state is DoneState) {
+//           final comments = state.comments;
+//           return RefreshIndicator(
+//             onRefresh: () async => onRefresh,
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 PostCard(postEntity: postEntity),
+//                 Flexible(child: CommentsList(comments: comments)),
+//               ],
+//             ),
+//           );
+//         } else if (state is LoadingState) {
+//           return const LoadingIndicator();
+//         } else {
+//           return const SizedBox.shrink();
+//         }
+//       },
+//     );
+//   }
+// }

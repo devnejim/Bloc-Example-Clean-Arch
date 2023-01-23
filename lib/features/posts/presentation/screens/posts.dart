@@ -26,8 +26,10 @@ class PostsScreen extends StatelessWidget {
           return RefreshIndicator(
               onRefresh: () async => _onRefresh(context),
               child: PostsList(posts: state.posts, canFetch: state.canFetch));
-        } else {
+        } else if (state is LoadingState) {
           return const LoadingIndicator();
+        } else {
+          return const SizedBox.shrink();
         }
       }),
       floatingActionButton: FloatingActionButton(

@@ -30,8 +30,6 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         routerConfig: appRoutes,
-        // routeInformationParser: ,
-        // routerDelegate: ,
         debugShowCheckedModeBanner: false,
         title: 'Bloc Example App',
         theme: FlexThemeData.light(scheme: appScheme),
