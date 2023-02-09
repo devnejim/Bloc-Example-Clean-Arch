@@ -35,7 +35,7 @@ class PostsLocalDataSourceImpl implements PostsLocalDataSource {
     if (cachedPostsString != null) {
       List decodedJsonData = json.decode(cachedPostsString);
       final cachedPosts = decodedJsonData
-          .map((decodedPost) => PostModel.fromJson(decodedPost))
+          .map((decodedPost) => PostModel.fromMap(decodedPost))
           .toList();
       return Future.value(cachedPosts);
     } else {

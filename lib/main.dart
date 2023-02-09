@@ -5,13 +5,18 @@ import 'package:bloc_app_example/features/posts/presentation/blocs/posts/posts_b
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'dependencies_injector.dart' as sl;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
   Bloc.observer = AppBlocObserver();
   await sl.ServiceLocator.init();
+
   runApp(const MyApp());
 }
 
@@ -24,8 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (_) => sl.getIt<PostsBloc>()..add(const GetPostsEvent())),
+        BlocProvider(create: (_) => sl.getIt<PostsBloc>()),
         BlocProvider(create: (_) => sl.getIt<AddDeleteUpdateBloc>())
       ],
       child: MaterialApp.router(

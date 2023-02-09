@@ -1,6 +1,6 @@
 import 'package:bloc_app_example/features/posts/presentation/blocs/posts/posts_bloc.dart';
-import 'package:bloc_app_example/features/posts/presentation/screens/posts.dart';
-import 'package:bloc_app_example/features/posts/presentation/widgets/posts/add_post_dialog.dart';
+import 'package:bloc_app_example/features/posts/presentation/screens/posts_screen.dart';
+import 'package:bloc_app_example/features/posts/presentation/widgets/posts_screen/add_post_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -8,10 +8,10 @@
 * [x] Work with public API using Http
 * [x] Pagination
 * [x] Local Storage and caching 
-* [x] unit tests
-* [x] widget tests
-* [x] integration tests
-* [x] migrate caching to hydrated bloc
+* [x] Hydrated bloc
+* [x] Unit tests
+* [x] Widget tests
+* [x] Integration tests
 
 ## About App
 This show case project fetches 10 Posts from [Public API](https://jsonplaceholder.typicode.com/) on app start and cache them, on user scroll +10 posts will be fetched. 

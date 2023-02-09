@@ -1,6 +1,6 @@
 import 'package:bloc_app_example/features/posts/domain/entities/post.dart';
 import 'package:bloc_app_example/features/posts/presentation/blocs/posts/posts_bloc.dart';
-import 'package:bloc_app_example/features/posts/presentation/widgets/posts/post_tile.dart';
+import 'package:bloc_app_example/features/posts/presentation/widgets/posts_screen/post_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

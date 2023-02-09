@@ -1,7 +1,7 @@
 import 'package:bloc_app_example/features/posts/domain/entities/post.dart';
 import 'package:bloc_app_example/features/posts/presentation/screens/error_screen.dart';
 import 'package:bloc_app_example/features/posts/presentation/screens/post_comments.dart';
-import 'package:bloc_app_example/features/posts/presentation/screens/posts.dart';
+import 'package:bloc_app_example/features/posts/presentation/screens/posts_screen.dart';
 import 'package:go_router/go_router.dart';
 
 enum AppRoutes {

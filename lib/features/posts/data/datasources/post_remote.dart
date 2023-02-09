@@ -29,7 +29,7 @@ class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
     );
     if (response.statusCode == 200) {
       List decodedBody = jsonDecode(response.body);
-      final posts = decodedBody.map((e) => PostModel.fromJson(e)).toList();
+      final posts = decodedBody.map((e) => PostModel.fromMap(e)).toList();
       return posts;
     }
     throw ServerException();
